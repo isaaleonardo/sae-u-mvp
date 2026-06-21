@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Clock, AlertTriangle, RotateCcw, Check, Calendar, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const SUBJECTS = [
+export const SUBJECTS = [
     {
         id: 'MAT-101',
         name: 'Cálculo Diferencial',
@@ -42,10 +42,9 @@ const SUBJECTS = [
     }
 ];
 
-export default function Inscripcion() {
+export default function Inscripcion({ setIsInscrito, selectedIds, setSelectedIds }) {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
-    const [selectedIds, setSelectedIds] = useState(['FIS-101']); // Inicia con Física I seleccionado como en el MVP
 
     const totalCredits = SUBJECTS.filter(s => selectedIds.includes(s.id)).reduce((sum, s) => sum + s.credits, 0);
 
@@ -254,7 +253,10 @@ export default function Inscripcion() {
                     ) : (
                         <div className="w-full flex justify-center">
                             <button 
-                                onClick={() => navigate('/dashboard')}
+                                onClick={() => {
+                                    setIsInscrito(true);
+                                    navigate('/dashboard');
+                                }}
                                 className="bg-[#1C2B4F] text-white font-bold py-3 px-12 rounded-full hover:bg-opacity-90 flex items-center gap-2 text-sm transition-colors"
                             >
                                 VOLVER AL DASHBOARD

@@ -2,7 +2,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutGrid, BookOpen, Calendar, GraduationCap, Box, ArrowLeft } from 'lucide-react';
 
-export default function Layout({ children, isSolvente, setIsSolvente }) {
+export default function Layout({ children, isSolvente, setIsSolvente, isInscrito, setIsInscrito }) {
     const location = useLocation();
 
     // Layout especial sin sidebar para la página de Inscripción
@@ -34,11 +34,13 @@ export default function Layout({ children, isSolvente, setIsSolvente }) {
         );
     }
 
+    // Si está inscrito, mostramos 'Horario' y ocultamos 'Inscripción'.
+    // Si no está inscrito, mostramos 'Inscripción' y ocultamos 'Horario'.
     const menuItems = [
         { path: '/dashboard', label: 'Inicio', icon: LayoutGrid },
-        { path: '/inscripcion', label: 'Materias', icon: BookOpen },
-        { path: '/horario', label: 'Horario', icon: Calendar },
-        { path: '/record', label: 'Mi Récord', icon: GraduationCap },
+        ...(isInscrito 
+            ? [{ path: '/horario', label: 'Horario', icon: Calendar }]
+            : [{ path: '/inscripcion', label: 'Inscripción', icon: GraduationCap }])
     ];
 
     return (
@@ -52,20 +54,19 @@ export default function Layout({ children, isSolvente, setIsSolvente }) {
                     </div>
                     <p className="text-[10px] text-gray-500 tracking-widest mt-1 uppercase">Académico</p>
                 </div>
-                
+
                 <nav className="flex flex-col gap-2">
                     {menuItems.map((item) => {
                         const isActive = location.pathname === item.path || (item.path === '/dashboard' && location.pathname === '/');
                         const Icon = item.icon;
                         return (
-                            <Link 
+                            <Link
                                 key={item.path}
-                                to={item.path} 
-                                className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${
-                                    isActive 
-                                    ? 'bg-[#FFF9EE] text-[#E67E22]' 
-                                    : 'text-gray-500 hover:bg-gray-50'
-                                }`}
+                                to={item.path}
+                                className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${isActive
+                                        ? 'bg-[#FFF9EE] text-[#E67E22]'
+                                        : 'text-gray-500 hover:bg-gray-50'
+                                    }`}
                             >
                                 <Icon className="w-5 h-5" />
                                 {item.label}
@@ -93,11 +94,18 @@ export default function Layout({ children, isSolvente, setIsSolvente }) {
                             >
                                 {isSolvente ? 'Solvente' : 'Pendiente'}
                             </button>
+                            <button
+                                onClick={() => setIsInscrito(!isInscrito)}
+                                className={`px-2 py-1 rounded text-white text-xs font-bold transition-colors ${isInscrito ? 'bg-ucvBlue' : 'bg-gray-400'
+                                    }`}
+                            >
+                                {isInscrito ? 'Inscrito' : 'No Inscrito'}
+                            </button>
                         </div>
-                        
-                        <img 
-                            src="https://api.dicebear.com/7.x/notionists/svg?seed=Andres" 
-                            alt="Profile" 
+
+                        <img
+                            src="https://api.dicebear.com/7.x/notionists/svg?seed=Andres"
+                            alt="Profile"
                             className="w-10 h-10 rounded-full bg-gray-200 border border-gray-300"
                         />
                     </div>

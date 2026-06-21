@@ -2,7 +2,7 @@
 import { CalendarCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Dashboard({ isSolvente }) {
+export default function Dashboard({ isSolvente, isInscrito }) {
     const navigate = useNavigate();
 
     return (
@@ -84,12 +84,28 @@ export default function Dashboard({ isSolvente }) {
             </div>
 
             {/* Call to Action (CTA) */}
-            <button 
-                onClick={() => navigate(isSolvente ? '/inscripcion' : '/pago')}
-                className="bg-[#1C2B4F] text-white hover:text-[#C9A03D] w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-sm mt-4"
-            >
-                INICIAR INSCRIPCIÓN →
-            </button>
+            {isInscrito ? (
+                <button 
+                    onClick={() => navigate('/horario')}
+                    className="bg-[#1C2B4F] text-white hover:text-[#C9A03D] w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-sm mt-4"
+                >
+                    VER HORARIO →
+                </button>
+            ) : !isSolvente ? (
+                <button 
+                    onClick={() => navigate('/pago')}
+                    className="bg-[#E67E22] text-white hover:bg-opacity-90 w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-sm mt-4"
+                >
+                    REALIZAR PAGO PARA INSCRIBIRSE →
+                </button>
+            ) : (
+                <button 
+                    onClick={() => navigate('/inscripcion')}
+                    className="bg-[#1C2B4F] text-white hover:text-[#C9A03D] w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-sm mt-4"
+                >
+                    INICIAR INSCRIPCIÓN →
+                </button>
+            )}
         </div>
     );
 }
