@@ -1,55 +1,83 @@
 // src/views/Dashboard.jsx
-import { useNavigate } from 'react-router-dom';
+import { CalendarCheck } from 'lucide-react';
 
 export default function Dashboard({ isSolvente }) {
-    const navigate = useNavigate();
-
     return (
-        <div className="space-y-6 animate-fade-in">
-            {/* Tarjetas de Estatus */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center border-t-4 border-statusGreen">
-                    <p className="text-xs text-gray-500 font-bold tracking-widest">ACADÉMICO</p>
-                    <p className="text-statusGreen font-bold text-lg">SOLVENTE</p>
-                </div>
-                <div className={`bg-white p-4 rounded-lg shadow-sm text-center border-t-4 ${isSolvente ? 'border-statusGreen' : 'border-statusOrange'}`}>
-                    <p className="text-xs text-gray-500 font-bold tracking-widest">ADMINISTRATIVO</p>
-                    <p className={`font-bold text-lg ${isSolvente ? 'text-statusGreen' : 'text-statusOrange'}`}>
-                        {isSolvente ? 'SOLVENTE' : 'PENDIENTE'}
-                    </p>
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center border-t-4 border-statusGreen">
-                    <p className="text-xs text-gray-500 font-bold tracking-widest">BIBLIOTECA</p>
-                    <p className="text-statusGreen font-bold text-lg">SIN DEUDAS</p>
-                </div>
-            </div>
-
+        <div className="space-y-6 animate-fade-in max-w-5xl">
             {/* Banner de Cita */}
-            <div className="bg-blue-50 border-l-4 border-ucvBlue p-4 rounded shadow-sm">
-                <h3 className="font-heading font-bold text-ucvBlue">Cita horaria: 14 sept, 09:30 AM</h3>
-                <p className="text-sm text-gray-600">Tu turno ha sido asignado basado en tu promedio académico actual.</p>
+            <div className="bg-[#1C2B4F] text-white p-6 rounded-xl shadow-sm flex items-center gap-4">
+                <div className="bg-[#D4A373] p-2 rounded-lg flex-shrink-0">
+                    <CalendarCheck className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                    <h3 className="font-bold text-lg">Cita horaria: 14 sept, 09:30 AM</h3>
+                    <p className="text-sm text-gray-300">Tu turno ha sido asignado basado en tu promedio académico actual.</p>
+                </div>
             </div>
 
-            {/* Progreso y CTA */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                <div className="bg-white p-6 rounded-lg shadow-sm flex items-center gap-6 col-span-2">
-                    <div className="w-24 h-24 rounded-full border-8 border-ucvGold flex items-center justify-center flex-col">
-                        <span className="font-bold text-2xl">16.5</span>
-                        <span className="text-xs">/20</span>
+            {/* Tarjetas de Estatus */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 className="font-bold text-[#2C3E50] mb-4">Estatus</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-[#F8F9FA] p-4 py-6 rounded-lg flex flex-col items-center justify-center gap-1">
+                        <div className="w-3 h-3 rounded-full bg-statusGreen mb-2"></div>
+                        <p className="text-[10px] text-gray-400 font-bold tracking-widest">ACADÉMICO</p>
+                        <p className="text-statusGreen font-bold text-sm">SOLVENTE</p>
                     </div>
-                    <div>
-                        <p className="text-xs text-gray-500 font-bold">CRÉDITOS APROBADOS</p>
-                        <p className="text-xl font-bold text-ucvBlue">112 / 160</p>
+                    
+                    <div className="bg-[#F8F9FA] p-4 py-6 rounded-lg flex flex-col items-center justify-center gap-1">
+                        <div className={`w-3 h-3 rounded-full mb-2 ${isSolvente ? 'bg-statusGreen' : 'bg-[#E67E22]'}`}></div>
+                        <p className="text-[10px] text-gray-400 font-bold tracking-widest">ADMINISTRATIVO</p>
+                        <p className={`font-bold text-sm ${isSolvente ? 'text-statusGreen' : 'text-[#E67E22]'}`}>
+                            {isSolvente ? 'SOLVENTE' : 'PENDIENTE'}
+                        </p>
+                    </div>
+                    
+                    <div className="bg-[#F8F9FA] p-4 py-6 rounded-lg flex flex-col items-center justify-center gap-1">
+                        <div className="w-3 h-3 rounded-full bg-statusGreen mb-2"></div>
+                        <p className="text-[10px] text-gray-400 font-bold tracking-widest">BIBLIOTECA</p>
+                        <p className="text-statusGreen font-bold text-sm">SIN DEUDAS</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Progreso */}
+            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex items-center gap-12">
+                {/* Círculo de Progreso */}
+                <div className="flex-shrink-0 relative w-32 h-32 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90 absolute" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#F4F4F4" strokeWidth="8" />
+                        <circle 
+                            cx="50" cy="50" r="45" 
+                            fill="none" 
+                            stroke="#C9A03D" 
+                            strokeWidth="8" 
+                            strokeDasharray="283" 
+                            strokeDashoffset="50" 
+                            strokeLinecap="round" 
+                        />
+                    </svg>
+                    <div className="flex flex-col items-center z-10 mt-1">
+                        <span className="font-bold text-3xl text-[#2C3E50]">16.5</span>
+                        <span className="text-xs text-gray-400 font-medium">/ 20</span>
                     </div>
                 </div>
 
-                {/* Botón con Lógica Condicional */}
-                <button
-                    onClick={() => navigate(isSolvente ? '/inscripcion' : '/pago')}
-                    className="bg-ucvBlue text-white hover:bg-opacity-90 w-full py-6 rounded-lg font-heading font-bold text-lg transition-all shadow-md"
-                >
-                    INICIAR INSCRIPCIÓN →
-                </button>
+                <div className="flex-1">
+                    <h3 className="font-bold text-[#2C3E50] mb-4">Tu Progreso Académico</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-[#F8F9FA] p-5 rounded-lg flex flex-col justify-center">
+                            <p className="text-[10px] text-gray-400 font-bold tracking-widest mb-1">CRÉDITOS APROBADOS</p>
+                            <p className="text-2xl font-bold text-[#2C3E50]">
+                                112 <span className="text-sm text-gray-400 font-normal">/ 160</span>
+                            </p>
+                        </div>
+                        <div className="bg-[#F8F9FA] p-5 rounded-lg flex flex-col justify-center">
+                            <p className="text-[10px] text-gray-400 font-bold tracking-widest mb-1">MATERIAS CURSADAS</p>
+                            <p className="text-2xl font-bold text-[#2C3E50]">28</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
