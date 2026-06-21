@@ -1,7 +1,10 @@
 // src/views/Dashboard.jsx
 import { CalendarCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard({ isSolvente }) {
+    const navigate = useNavigate();
+
     return (
         <div className="space-y-6 animate-fade-in max-w-5xl">
             {/* Banner de Cita */}
@@ -79,6 +82,14 @@ export default function Dashboard({ isSolvente }) {
                     </div>
                 </div>
             </div>
+
+            {/* Call to Action (CTA) */}
+            <button 
+                onClick={() => navigate(isSolvente ? '/inscripcion' : '/pago')}
+                className="bg-[#1C2B4F] text-white hover:text-[#C9A03D] w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-sm mt-4"
+            >
+                INICIAR INSCRIPCIÓN →
+            </button>
         </div>
     );
 }

@@ -1,9 +1,38 @@
 // src/components/Layout.jsx
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutGrid, BookOpen, Calendar, GraduationCap, Box } from 'lucide-react';
+import { LayoutGrid, BookOpen, Calendar, GraduationCap, Box, ArrowLeft } from 'lucide-react';
 
 export default function Layout({ children, isSolvente, setIsSolvente }) {
     const location = useLocation();
+
+    // Layout especial sin sidebar para la página de Inscripción
+    if (location.pathname === '/inscripcion') {
+        return (
+            <div className="min-h-screen bg-[#F8F9FA] text-slate-800 font-sans flex flex-col">
+                {/* Header Inscripción */}
+                <header className="bg-white px-8 py-4 flex justify-between items-center shadow-sm z-10">
+                    <div className="flex items-center gap-6">
+                        <Link to="/dashboard" className="text-gray-500 hover:text-gray-800 transition-colors">
+                            <ArrowLeft className="w-5 h-5" />
+                        </Link>
+                        <div className="flex items-center gap-2 text-ucvBlue">
+                            <Box className="w-5 h-5" />
+                            <h1 className="text-xl font-bold tracking-tight">SAE-U</h1>
+                        </div>
+                        <div className="bg-gray-100 text-gray-500 text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+                            Inscripción 2024-II
+                        </div>
+                    </div>
+                    <button className="text-[#2C3E50] font-bold text-sm hover:text-ucvGold transition-colors">
+                        Guardar y Salir
+                    </button>
+                </header>
+                <main className="flex-1 w-full mx-auto p-8 max-w-[1400px]">
+                    {children}
+                </main>
+            </div>
+        );
+    }
 
     const menuItems = [
         { path: '/dashboard', label: 'Inicio', icon: LayoutGrid },
